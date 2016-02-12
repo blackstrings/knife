@@ -46,7 +46,7 @@ artifacts/
 *_p.c
 *_i.h
 *.ilk
-*.meta
+## exclude this for unity to work *.meta
 *.obj
 *.pch
 *.pdb
