@@ -247,3 +247,4 @@ sysinfo.txt
 Library/
 obj/
 Temp/
+*.DS_Store
