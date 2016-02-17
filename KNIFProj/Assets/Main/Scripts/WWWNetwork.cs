@@ -14,11 +14,17 @@ namespace LAO.Test{
 
         //private string serverURL = "https://mydomain.com/getData.php";
 		//private string serverURL = "https://fast-cove-55987.herokuapp.com/blogs.json";
-		private string serverURL = "https://fast-cove-55987.herokuapp.com/blogs/1.json";
-        string jsonStr { get; set; }
+		//private string serverURL = "https://fast-cove-55987.herokuapp.com/blogs/1.json";
+		//private string serverURL = "http://jsonplaceholder.typicode.com/posts";
+		//private string serverURL = "https://knife-example-api1.herokuapp.com/customers.json";
+		private string serverURL = "http://xailao.com/games/poplopoly/retreive.php?query=top5";
+
+
+		string jsonStr { get; set; }
         List<string> data;
 
         void Start() {
+			serverURL = "localhost:3000";
             data = new List<string> { "19532", "19531", "19525", "19572" }; //actual test data
         }
 
@@ -28,6 +34,7 @@ namespace LAO.Test{
             // set as many key,values you want into wwwform
             //server will use post to retrieve the stored info
             WWWForm form = new WWWForm();
+
             form.AddField("cid", id);
 
             //use www to send the form to the server
@@ -53,8 +60,18 @@ namespace LAO.Test{
 			//server will use post to retrieve the stored info
 			WWWForm form = new WWWForm();
 			form.AddField("username", "testUser");
+			//form.AddField("token", "tokenValue");
+
+
+			//TEST with headers
+			int id = 1;
+			string pw = "1";
+			string json = "{\"id\":\"" + id + "\", \"userId\":\"" + pw + "\"}";
+			Dictionary<string, string> postHeader = new Dictionary<string, string>();
+			postHeader.Add("Content-Type", "application/json");
 
 			//use www to send the form to the server
+			//WWW w = new WWW(serverURL, System.Text.Encoding.UTF8.GetBytes(json), postHeader);
 			WWW w = new WWW(serverURL, form);
 
 			yield return w;
