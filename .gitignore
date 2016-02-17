@@ -247,4 +247,5 @@ sysinfo.txt
 Library/
 obj/
 Temp/
-KNIFProj/.DS_Store
+*.DS_Store
+
