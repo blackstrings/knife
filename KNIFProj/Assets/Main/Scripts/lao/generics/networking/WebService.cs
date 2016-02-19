@@ -5,16 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.Experimental.Networking;
 using Newtonsoft.Json;
 
+
 namespace LAO.Generic {
 
-    //test
-    public class Foo {
-        public int id { get; set; }
-        public string full_name { get; set; }
-        public string email { get; set; }
-        public string phone { get; set; }
-        public Foo() { }
-    }
+   
 
     public class WebService : MonoBehaviour {
 
@@ -27,9 +21,7 @@ namespace LAO.Generic {
 		void Update () {
 		
 		}
-
-		public Text text_input_go;
-
+        
 		//test call
 		public void testServerCall(){
 			//string query = "http://xailao.com/games/poplopoly/retreive.php?query=top5";
@@ -83,20 +75,7 @@ namespace LAO.Generic {
                     );
 
 
-                //single json object
-                /*
-                Foo f = new Foo();
-                f.id = 22;
-                f.full_name = "tom";
-                f.email = "tom@mail";
-                f.phone = "9999-999";
-
-                string jsonstr = JsonConvert.SerializeObject(f);
-
-                Foo f2 = JsonConvert.DeserializeObject<Foo>(jsonstr);
                
-                Debug.Log(f2.id);
-                */
                 
 
 
