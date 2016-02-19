@@ -12,6 +12,8 @@ namespace LAO.Generic {
 
     public class WebService : MonoBehaviour {
 
+		public Text textOutput_gui;
+
 		// Use this for initialization
 		void Start () {
 		
@@ -29,7 +31,7 @@ namespace LAO.Generic {
 			//RUBY
 			//string query = "localhost:3000";
 			//string query = "http://jsonplaceholder.typicode.com/posts";
-            string query = "https://knife-example-api1.herokuapp.com/customers.json";
+            string query = "https://knife-example-api1.herokuapp.com/customers";
 
             //string query = "http://demo.app/items/unityItems";
             StartCoroutine(sendQuery(query));
@@ -52,10 +54,14 @@ namespace LAO.Generic {
 			//string url = "http://xailao.com/games/poplopoly/retreive.php?query=top10";
 			string url = query;
 
+
+
             //old www get method - working
+			/*
             WWW www = new WWW(url);
             yield return www;
             
+
             if (!string.IsNullOrEmpty(www.error)) {
                 Debug.Log(www.error);
             } else {
@@ -74,30 +80,49 @@ namespace LAO.Generic {
                     + " #phone: " + f.phone
                     );
 
-
-               
-                
-
-
             }
-
+			*/
+			 
 
 
             //Post way using unityWebRequest
-            /*
+            
             WWWForm f = new WWWForm();
-            f.AddField("customer", "1");
-            UnityWebRequest www = UnityWebRequest.Post(url, f);
-            // www.downloadHandler = new DownloadHandlerBuffer();
+            //f.AddField("id", "1");
+			f.AddField("full_name", "Kimmy");
+			f.AddField("email", "kimmy@hotmail.com");
+			f.AddField("phone", "222-0001");
+
+
+			Dictionary<string, string> hash = new Dictionary<string, string>();
+
+			hash.Add("full_name", "Kimmy");
+			hash.Add("email", "Kimmy@hotmail.com");
+			hash.Add("phone", "222-3333");
+			hash.Add("customer", "newCustom");
+
+			string jstr = "{\"customer\":[{\"full_name\":\"tom\",\"email\":\"tom@hotmail.com\",\"phone\":\"333-3333\"}]}";
+
+			//f.AddField("created_at", System.DateTime.Now);
+			//f.AddField("updated_at", System.DateTime.Now);
+			//Debug.Log(System.DateTime.Now);
+
+			//2016-02-19 03:03:33
+
+            UnityWebRequest www = UnityWebRequest.Post(url, jstr);
+			www.SetRequestHeader("Content-Type", "application/json");
+            www.downloadHandler = new DownloadHandlerBuffer();
 
             yield return www.Send();
             if (www.isError) {
                 Debug.Log(www.error);
             } else {
+				textOutput_gui.text = "login failed!";
                 Debug.Log("Form uploaded complete");
                 Debug.Log(www.downloadHandler.text);
             }
-            */
+
+            
 
                 //the php file is called and whatever it echose back will be put into www.text
                 //go_scoreTxt.gameObject.GetComponent<Text>().text = www.text;
