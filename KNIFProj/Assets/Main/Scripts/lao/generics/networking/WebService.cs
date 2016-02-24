@@ -9,7 +9,11 @@ using Newtonsoft.Json;
 namespace LAO.Generic {
 
    
-
+	/// <summary>
+	/// For rail API make sure to put
+	/// protect_from_forgery
+	/// under the controller handling post request
+	/// </summary>
     public class WebService : MonoBehaviour {
 
 		public Text textOutput_gui;
@@ -29,10 +33,10 @@ namespace LAO.Generic {
 			//string query = "http://xailao.com/games/poplopoly/retreive.php?query=top5";
 
 			//RUBY
-			//string query = "localhost:3000";
+			string query = "localhost:3000/welcome/login";
 			//string query = "http://jsonplaceholder.typicode.com/posts";
-            string query = "https://knife-example-api1.herokuapp.com/customers";
-
+            //string query = "https://knife-example-api1.herokuapp.com/customers";
+			//string query = "www.xailao.com/game/popop/retrieve.php";
             //string query = "http://demo.app/items/unityItems";
             StartCoroutine(sendQuery(query));
 		}
@@ -45,18 +49,28 @@ namespace LAO.Generic {
 	 	"password" + password +
 	 	"score" + level;
 	 	*/
-			
-			//url = "www.xailao.com/game/popop/retrieve.php";
-			
-			//show this text while loading
-			//go_scoreTxt.gameObject.GetComponent<Text>().text = "Loading . . .";
-			
 			//string url = "http://xailao.com/games/poplopoly/retreive.php?query=top10";
 			string url = query;
 
+			//json data - works with only UnityWebRequest
+			string jstr = "{\'name\':\'john\'}";
 
+			//form data - works with both UnityWebRequest and WWW
+			WWWForm f = new WWWForm();
+			f.AddField("name", "Kimmy");
+			f.AddField("gameid", "1001001");
+			f.AddField("user", "222-0001");
+
+			//Hash data - works with only UnityWebRequest
+			Dictionary<string, string> hash = new Dictionary<string, string>();
+			hash.Add("name", "john");
+
+			//show this text while loading
+			//go_scoreTxt.gameObject.GetComponent<Text>().text = "Loading . . .";
+			
 
             //old www get method - working
+			//################################
 			/*
             WWW www = new WWW(url);
             yield return www;
@@ -82,26 +96,33 @@ namespace LAO.Generic {
 
             }
 			*/
-			 
+			//############################### END of old www 
+
+
+			//WWW POST
+			//###################################
+			//You have to use loops to populate the form
+			WWW www = new WWW(url, f);
+			yield return www;
+			if (!string.IsNullOrEmpty(www.error)) {
+				Debug.Log(www.error);
+			} else {
+				Debug.Log(www.text);
+			}
+			//################################## end of www post
+
 
 
             //Post way using unityWebRequest
-            
-            WWWForm f = new WWWForm();
-            //f.AddField("id", "1");
-			f.AddField("full_name", "Kimmy");
-			f.AddField("email", "kimmy@hotmail.com");
-			f.AddField("phone", "222-0001");
+            //######################################
+			//This new method allows you to pass in json format str as a argument into the
+			//the only downside is that rails cannot parse this properly on rails server
+			/*	
 
 
-			Dictionary<string, string> hash = new Dictionary<string, string>();
 
-			hash.Add("full_name", "Kimmy");
-			hash.Add("email", "Kimmy@hotmail.com");
-			hash.Add("phone", "222-3333");
-			hash.Add("customer", "newCustom");
+			//string jstr = "{\"customer\":[{\"full_name\":\"tom\",\"email\":\"tom@hotmail.com\",\"phone\":\"333-3333\"}]}";
 
-			string jstr = "{\"customer\":[{\"full_name\":\"tom\",\"email\":\"tom@hotmail.com\",\"phone\":\"333-3333\"}]}";
 
 			//f.AddField("created_at", System.DateTime.Now);
 			//f.AddField("updated_at", System.DateTime.Now);
@@ -109,8 +130,11 @@ namespace LAO.Generic {
 
 			//2016-02-19 03:03:33
 
-            UnityWebRequest www = UnityWebRequest.Post(url, jstr);
+			var www = UnityWebRequest.Post(url, hash);
+			//UnityWebRequest www = UnityWebRequest.Get(url);
 			www.SetRequestHeader("Content-Type", "application/json");
+			//www.SetRequestHeader("Content-Type", "text/json");
+
             www.downloadHandler = new DownloadHandlerBuffer();
 
             yield return www.Send();
@@ -121,6 +145,8 @@ namespace LAO.Generic {
                 Debug.Log("Form uploaded complete");
                 Debug.Log(www.downloadHandler.text);
             }
+			*/
+			//------- UNITY WEB REQUEST  end-------------
 
             
 
