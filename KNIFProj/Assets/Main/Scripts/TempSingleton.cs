@@ -6,6 +6,8 @@ public class TempSingleton : Singleton<TempSingleton> {
 
     public GameObject activeGO { get; set; }
 
+    public int score { get; set; }
+
 	public GameObject getActiveGO() {
         if (activeGO) {
             return activeGO;

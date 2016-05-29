@@ -17,6 +17,9 @@ public class MovementController : MonoBehaviour {
     // Use this for initialization
     public void move() {
         activeGO.GetComponent<Rigidbody>().AddForce(Vector3.forward * 500f);
-        
+    }
+
+    public void reset() {
+        TempSingleton.Instance.activeGO.GetComponent<ResetPosition>().init();
     }
 }
