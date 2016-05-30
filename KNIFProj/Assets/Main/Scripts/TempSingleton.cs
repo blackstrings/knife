@@ -29,7 +29,7 @@ public class TempSingleton : Singleton<TempSingleton> {
     }
 
     public void updateScoreDisplay() {
-        scoreDisplay.GetComponent<Text>().text = "Score " + score;
+        scoreDisplay.GetComponent<Text>().text = "Score: " + score;
     }
 
 }
