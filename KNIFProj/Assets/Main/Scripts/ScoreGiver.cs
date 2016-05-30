@@ -4,7 +4,7 @@ using System.Collections;
 public class ScoreGiver : MonoBehaviour {
 
     float timerCounter = 0f;
-    float duration = 1000;
+    float duration = 2f;
     bool isLanded = false;
 
 	// Use this for initialization
@@ -19,29 +19,41 @@ public class ScoreGiver : MonoBehaviour {
 
     
     void OnCollisionEnter(Collision col) {
-        /*
+        
         if (col.gameObject.tag == "Player") {
-            Debug.Log("hit");
+            //Debug.Log("hit");
 
             isLanded = true;
-            StartCoroutine(prepareToGiveScore());
+           StartCoroutine(prepareToGiveScore());
         }
-        */
+        
     }
     
 
     void OnCollisionStay(Collision col) {
-        //timerCounter +
-    }
+        /*
+        if (isLanded) {
+            timerCounter += Time.deltaTime;
+        }
 
-    /*
+        if (timerCounter > duration && isLanded) {
+            TempSingleton.Instance.score++;
+            Debug.Log("point added");
+            isLanded = false;
+            timerCounter = 0f;
+        }
+
+        Debug.Log(timerCounter + " : score : " + TempSingleton.Instance.score);
+        */
+
+    }
+    
     void OnCollisionExit(Collision col) {
         if (col.gameObject.tag == "Player") {
             isLanded = false;
-            Debug.Log("exit");
+           // Debug.Log("exit");
         }
     }
-    */
 
     IEnumerator prepareToGiveScore() {
         timerCounter = 0f;
@@ -54,9 +66,16 @@ public class ScoreGiver : MonoBehaviour {
         isLanded = false;
         if (timerCounter >= duration) {
             TempSingleton.Instance.score++;
-            Debug.Log("point added");
+            TempSingleton.Instance.updateScoreDisplay();
+
+            Color newColor = new Color(Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f), Random.Range(0.0f, 1.0f));
+            this.gameObject.GetComponent<Renderer>().material.SetColor("_Color", newColor);
+
+            TempSingleton.Instance.resetPlayer();
+
+           // Debug.Log("point added");
         }
-        Debug.Log("exiting loop");
+        //Debug.Log("exiting loop");
         
     }
 }

@@ -10,6 +10,7 @@ public class ResetPosition : MonoBehaviour {
     Rigidbody rb;
 
     void Start() {
+        //store all default starting positions and rotation
         go = this.gameObject;
         rb = go.GetComponent<Rigidbody>();
         origPos = go.transform.position;
