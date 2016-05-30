@@ -12,6 +12,9 @@ namespace LAO.Generic {
         public Transform locatorA;
         public Transform locatorB;
         public bool isAnimate;
+		private bool goForward;
+
+		public bool autoReverse = false;
         
         // Use this for initialization
         void Start() {
@@ -25,13 +28,27 @@ namespace LAO.Generic {
 
         IEnumerator animate(float time) {
             float timer = 0.0f;
-            while (timer <= time) {
-                this.gameObject.transform.position = Vector3.Lerp(locatorA.position, locatorB.position, animCurve.Evaluate(timer / time));
-                timer += Time.deltaTime;
-                yield return null;
-            }
+
+			if(goForward){
+	            while (timer <= time) {
+	                this.gameObject.transform.position = Vector3.Lerp(locatorA.position, locatorB.position, animCurve.Evaluate(timer / time));
+	                timer += Time.deltaTime;
+	                yield return null;
+	            }
+			}else{
+				while (timer <= time) {
+					this.gameObject.transform.position = Vector3.Lerp(locatorB.position, locatorA.position, animCurve.Evaluate(timer / time));
+					timer += Time.deltaTime;
+					yield return null;
+				}
+			}
+
+			if(autoReverse){
+				goForward = !goForward;
+				StartCoroutine(animate(time));
+			}
             //anything below here will get hit once, once the animation time completes
-            Debug.Log("Animation Complete");
+            //Debug.Log("Animation Complete");
         }
     }
 }
