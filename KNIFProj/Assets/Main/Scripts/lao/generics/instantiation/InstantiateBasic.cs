@@ -12,12 +12,12 @@ namespace LAO.Generic {
         /*
         Must set the gameObject and the spawnLocator for this to work
         */
-        public GameObject go;
+        private GameObject go;
         public Transform spawnLocatorReference;
 
         // Use this for initialization
         void Start() {
-
+            go = this.gameObject;
             //find spawn point at start
             //t = GameObject.Find("centerSpawn").transform;
 

@@ -63,7 +63,7 @@ namespace LAO.Generic {
 
                     string locStr = "loc" + k.ToString();
 
-                    Transform locObj = platform.transform.FindChild(locStr);
+                    Transform locObj = platform.transform.Find(locStr);
                     //Transform loc2 = platform.transform.FindChild("loc2");
 
                     GameObject temp = (GameObject)Instantiate(Resources.Load(path), locObj.position, locObj.rotation);

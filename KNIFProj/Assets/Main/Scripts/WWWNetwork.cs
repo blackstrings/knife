@@ -3,20 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-namespace LAO.Test{
+namespace Rainkey.Network {
 
     /// <summary>
-    /// How unity communicates to other server
+	/// Communication to network api (ie. Rails)
     /// </summary>
     public class WWWNetwork : MonoBehaviour {
 
 		public Text textInput_go;
 
-        //private string serverURL = "https://mydomain.com/getData.php";
-		//private string serverURL = "https://fast-cove-55987.herokuapp.com/blogs.json";
-		//private string serverURL = "https://fast-cove-55987.herokuapp.com/blogs/1.json";
-		//private string serverURL = "http://jsonplaceholder.typicode.com/posts";
-		//private string serverURL = "https://knife-example-api1.herokuapp.com/customers.json";
 		private string serverURL = "http://xailao.com/games/poplopoly/retreive.php?query=top5";
 
 

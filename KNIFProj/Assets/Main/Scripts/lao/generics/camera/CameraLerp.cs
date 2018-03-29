@@ -61,9 +61,9 @@ namespace LAO.Generic {
             container_products = new GameObject("levels");  // organize leves into this gameobject
             createScreens();
 
-            locator_lvl_1 = GameObject.Find("lvl1").gameObject.transform.FindChild("locator").gameObject;
-            locator_lvl_2 = GameObject.Find("lvl2").gameObject.transform.FindChild("locator").gameObject;
-            locator_lvl_3 = GameObject.Find("lvl3").gameObject.transform.FindChild("locator").gameObject;
+            locator_lvl_1 = GameObject.Find("lvl1").gameObject.transform.Find("locator").gameObject;
+            locator_lvl_2 = GameObject.Find("lvl2").gameObject.transform.Find("locator").gameObject;
+            locator_lvl_3 = GameObject.Find("lvl3").gameObject.transform.Find("locator").gameObject;
 
             //default starting position for camera
             locator = locator_lvl_1.transform;
@@ -105,7 +105,7 @@ namespace LAO.Generic {
                     txt3d.transform.parent = temp.transform;
                     txt3d.GetComponentInChildren<TextMesh>().text = "Screen " + counter;
 
-                    insideChild = temp.transform.FindChild("title1").gameObject;
+                    insideChild = temp.transform.Find("title1").gameObject;
                     txt3d.transform.position = insideChild.transform.position;
                     txt3d.transform.rotation = insideChild.transform.rotation;
 
@@ -116,7 +116,7 @@ namespace LAO.Generic {
                     txt3d.transform.parent = temp.transform;
                     txt3d.GetComponentInChildren<TextMesh>().text = "Screen " + counter;
 
-                    insideChild = temp.transform.FindChild("title2").gameObject;
+                    insideChild = temp.transform.Find("title2").gameObject;
                     txt3d.transform.position = insideChild.transform.position;
                     txt3d.transform.rotation = insideChild.transform.rotation;
                     txt3d.GetComponent<TextMesh>().characterSize = .3f;
@@ -168,7 +168,7 @@ namespace LAO.Generic {
                 }
 
                 // reference screens dynamically
-                locator = objList[screen].gameObject.transform.FindChild("locator").transform;
+                locator = objList[screen].gameObject.transform.Find("locator").transform;
             }
             // *  move up
             if (Input.GetKeyUp(KeyCode.UpArrow)) {
@@ -180,7 +180,7 @@ namespace LAO.Generic {
                 }
 
                 // reference screens dynamically
-                locator = objList[screen].gameObject.transform.FindChild("locator").transform;
+                locator = objList[screen].gameObject.transform.Find("locator").transform;
             }
             // * move left
             if (Input.GetKeyUp(KeyCode.LeftArrow)) {
@@ -192,7 +192,7 @@ namespace LAO.Generic {
                 }
 
                 // reference screens dynamically
-                locator = objList[screen].gameObject.transform.FindChild("locator").transform;
+                locator = objList[screen].gameObject.transform.Find("locator").transform;
             }
 
             // * move down
@@ -205,7 +205,7 @@ namespace LAO.Generic {
                 }
 
                 // reference screens dynamically
-                locator = objList[screen].gameObject.transform.FindChild("locator").transform;
+                locator = objList[screen].gameObject.transform.Find("locator").transform;
             }
 
             // * home or zero
@@ -214,7 +214,7 @@ namespace LAO.Generic {
                 screen = 0;
 
                 // reference screens dynamically
-                locator = objList[screen].gameObject.transform.FindChild("locator").transform;
+                locator = objList[screen].gameObject.transform.Find("locator").transform;
             }
 
             // * toggle cam top view
