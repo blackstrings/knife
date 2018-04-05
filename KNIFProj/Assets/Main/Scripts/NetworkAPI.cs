@@ -12,6 +12,7 @@ public class NetworkAPI : MonoBehaviour {
 	public Text username;
 	public Text password;
 	public Button loginBtn;
+	public Button updateWeaponBtn;
 
 	// Use this for initialization
 	void Start () {
@@ -22,11 +23,20 @@ public class NetworkAPI : MonoBehaviour {
 
 		// simpler method
 		loginBtn.onClick.AddListener (login);
+		updateWeaponBtn.onClick.AddListener (updateWeapon);
 	}
 	
 	private void login(){
 		if (networker) {
 			networker.login(username.text, password.text);
+		}
+	}
+
+	private void updateWeapon(){
+		if (networker.getLoginDTO ().auth_token != null) {
+			networker.updateWeapon ("{\"rarity\": 7, \"speed\": 7 }");
+		} else {
+			Debug.Log ("auth token null");
 		}
 	}
 

@@ -23,7 +23,11 @@ namespace Rainkey.Network {
 		}
 
 		public void updateWeapon(string weapon){
-			Debug.Log ("weapon udated " + weapon);
+			if (loginDTO.auth_token != null) {
+				StartCoroutine (updateWeaponAsync (weapon));
+			} else {
+				Debug.Log ("failed to update weapon, auth token null");
+			}
 		}
 
 		public LoginDTO getLoginDTO(){
@@ -38,6 +42,23 @@ namespace Rainkey.Network {
 			}
 		}
 
+		private IEnumerator updateWeaponAsync(string weapon){
+			WWWForm f = new WWWForm ();
+			f.AddField ("auth_token", loginDTO.auth_token);
+			f.AddField ("weapon", weapon);
+
+			UnityWebRequest www = UnityWebRequest.Post (weaponUri + 1, f);
+			www.downloadHandler = new DownloadHandlerBuffer ();
+
+			yield return www.SendWebRequest ();
+
+			if (www.isNetworkError) {
+				Debug.Log (www.error);
+			} else {
+				Debug.Log (www.downloadHandler.text);
+			}
+		}
+
 		private IEnumerator userLogin (string username, string password)
 		{
 
@@ -45,6 +66,7 @@ namespace Rainkey.Network {
 			WWWForm f = new WWWForm ();
 			f.AddField ("email", username);	// yeng@email.com
 			f.AddField ("password", password);
+
 
 			// prepare the request
 			UnityWebRequest www = UnityWebRequest.Post (loginUri, f);
