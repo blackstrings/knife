@@ -34,7 +34,12 @@ public class NetworkAPI : MonoBehaviour {
 
 	private void updateWeapon(){
 		if (networker.getLoginDTO ().auth_token != null) {
-			networker.updateWeapon ("{\"rarity\": 7, \"speed\": 7 }");
+			// must use escape characters
+			networker.updateWeapon ( "{\"weapon\": {\"rarity\": 99, \"speed\": 99 }}" );
+
+			// ex: this won't work, rails will not recognize the json string, and treat it just like
+			// a regular string
+			// networker.updateWeapon ( "{weapon: {rarity: 99, speed: 99 }}" );
 		} else {
 			Debug.Log ("auth token null");
 		}
