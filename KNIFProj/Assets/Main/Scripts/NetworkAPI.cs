@@ -22,18 +22,18 @@ public class NetworkAPI : MonoBehaviour {
 //		});
 
 		// simpler method
-		loginBtn.onClick.AddListener (login);
+		loginBtn.onClick.AddListener (userLogin);
 		updateWeaponBtn.onClick.AddListener (updateWeapon);
 	}
-	
-	private void login(){
+
+	private void userLogin(){
 		if (networker) {
-			networker.login(username.text, password.text);
+			networker.userLogin(username.text, password.text);
 		}
 	}
 
 	private void updateWeapon(){
-		if (networker.getLoginDTO ().auth_token != null) {
+		if (networker.getLogin().auth_token != null) {
 			// must use escape characters
 			networker.updateWeapon ( "{\"weapon\": {\"rarity\": 99, \"speed\": 99 }}" );
 
@@ -50,11 +50,11 @@ public class NetworkAPI : MonoBehaviour {
 //	}
 
 	// TODO may not need
-	public LoginDTO getLoginDTO(){
-		LoginDTO dto = null;
+	public Login getLogin(){
+		Login login = null;
 		if(networker){
-			dto = networker.getLoginDTO ();
+			login = networker.getLogin ();
 		}
-		return dto;
+		return login;
 	}
 }

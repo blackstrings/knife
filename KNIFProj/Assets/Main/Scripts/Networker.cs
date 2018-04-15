@@ -19,7 +19,7 @@ namespace Rainkey.Network {
 		/// <summary>
 		/// Stores the login token once login successfully.
 		/// </summary>
-		private LoginDTO loginDTO;	// stores the loginDTO
+		private Login login;	// stores the loginDTO
 
 		// Use this for initialization
 		void Start ()
@@ -32,20 +32,20 @@ namespace Rainkey.Network {
 		}
 
 		public void updateWeapon(string weapon){
-			if (loginDTO.auth_token != null) {
+			if (login.auth_token != null) {
 				StartCoroutine (updateWeaponAsync (weapon));
 			} else {
 				Debug.Log ("failed to update weapon, auth token null");
 			}
 		}
 
-		public LoginDTO getLoginDTO(){
-			return loginDTO;
+		public Login getLogin(){
+			return login;
 		}
 
-		public void login(string username, string password) {
+		public void userLogin(string username, string password) {
 			if (username != null && password != null) {
-				StartCoroutine (userLogin (username, password));
+				StartCoroutine (userLoginCoroutine (username, password));
 			} else {
 				Debug.Log ("login failed, username or password is null");
 			}
@@ -53,10 +53,13 @@ namespace Rainkey.Network {
 
 		private IEnumerator updateWeaponAsync(string weapon){
 
-			// rails can post, but it may need hacking on rails side for update or target new routing for udpate
-//			WWWForm f = new WWWForm ();
-//			f.AddField ("weapon", weapon);
-//			f.headers.Add ("Authorization", "Token token=" + loginDTO.auth_token);
+			// rails prefer "update" request to update tables
+			// though rails can use post to update, avoid this hack
+
+			// therefore we do not use wwwform for put updates, instead use json with escape characters
+			// WWWForm f = new WWWForm ();
+			// f.AddField ("weapon", weapon);
+			// f.headers.Add ("Authorization", "Token token=" + loginDTO.auth_token);
 
 
 			//UnityWebRequest www = UnityWebRequest.Post(weaponUri + 1, f);
@@ -68,7 +71,7 @@ namespace Rainkey.Network {
 			byte[] myData = System.Text.Encoding.UTF8.GetBytes(weapon);
 			//byte[] testData = System.Text.Encoding.UTF8.GetBytes("helloUnity");
 			UnityWebRequest www = UnityWebRequest.Put(weaponUri + 1, myData);
-			www.SetRequestHeader("Authorization", "Token token=" + loginDTO.auth_token);
+			www.SetRequestHeader("Authorization", "Token token=" + login.auth_token);
 
 			// this is key for rails to know what kind of data to even think how to start parsing
 			www.SetRequestHeader("Content-Type", "application/json");
@@ -100,11 +103,12 @@ namespace Rainkey.Network {
 			if (www.isNetworkError) {
 				Debug.Log (www.error);
 			} else {
+				Debug.Log("weapon update success");
 				Debug.Log (www.downloadHandler.text);
 			}
 		}
 
-		private IEnumerator userLogin (string username, string password)
+		private IEnumerator userLoginCoroutine (string username, string password)
 		{
 
 			// fill the form
@@ -137,8 +141,8 @@ namespace Rainkey.Network {
 				//List<Foo> foos = JsonConvert.DeserializeObject<List<Foo>>(returnedJsonData);
 
 				// single object deserialize
-				loginDTO = JsonConvert.DeserializeObject<LoginDTO>(returnedJsonData);
-				Debug.Log("deserialize complete: " + loginDTO.auth_token);
+				login = JsonConvert.DeserializeObject<Login>(returnedJsonData);
+				Debug.Log("deserialize complete: " + login.auth_token);
 //                Debug.Log("converting json into tru objects >> now testing read from customer 1");
 //                Foo f = foos[0];
 //                Debug.Log("#Name: " + f.full_name 
