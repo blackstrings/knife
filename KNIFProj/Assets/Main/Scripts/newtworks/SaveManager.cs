@@ -43,7 +43,7 @@ namespace Rainkey.Network {
 
 		private IEnumerator beginSave (Weapon weapon, LoginAuth loginAuth){
 			WeaponDTO dto = weapon.serialize ();
-			string weaponJson = JsonUtility.ToJson (dto);
+			string weaponJson = JsonUtility.ToJson (weapon);
 			Debug.Log (weaponJson);
 			byte[] weaponJsonByte = System.Text.Encoding.UTF8.GetBytes(weaponJson);
 			//byte[] testData = System.Text.Encoding.UTF8.GetBytes("helloUnity");

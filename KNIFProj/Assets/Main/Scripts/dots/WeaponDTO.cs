@@ -8,6 +8,7 @@ public class WeaponDTO {
 	public int maxDamage;
 	public int rarity;
 	public int quality;
+	public int max_durability;
 
 
 }
