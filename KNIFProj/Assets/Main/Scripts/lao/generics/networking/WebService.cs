@@ -56,7 +56,7 @@ namespace LAO.Generic {
 
 			//json data - works with only UnityWebRequest
 			//string jstr = "{\'email\':\'yeng@email.com\',\'password\':\'password\'}";
-			string jstr = "{email: yeng@email.com, password: password}";
+			// string jstr = "{email: yeng@email.com, password: password}";
 
 			//form data - works with both UnityWebRequest and WWW
 			WWWForm f = new WWWForm();
@@ -149,7 +149,7 @@ namespace LAO.Generic {
 
             www.downloadHandler = new DownloadHandlerBuffer();
 
-            yield return www.Send();
+			yield return www.SendWebRequest ();
             if (www.isNetworkError) {
                 Debug.Log(www.error);
             } else {

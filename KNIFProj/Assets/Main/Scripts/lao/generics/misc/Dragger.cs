@@ -9,7 +9,7 @@ namespace LAO.Generic {
 
         public GameObject cam;
         public GameObject go;
-        private Vector3 screenPoint;
+		private Vector3 screenPoint = new Vector3();
         private Vector3 offset;
         private float _lockedYPosition;
 

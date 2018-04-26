@@ -19,7 +19,7 @@ namespace Rainkey.Network {
 		/// <summary>
 		/// Stores the login token once login successfully.
 		/// </summary>
-		private Login login;	// stores the loginDTO
+		private LoginAuth login;	// stores the loginDTO
 
 		// Use this for initialization
 		void Start ()
@@ -39,7 +39,7 @@ namespace Rainkey.Network {
 			}
 		}
 
-		public Login getLogin(){
+		public LoginAuth getLogin(){
 			return login;
 		}
 
@@ -76,27 +76,6 @@ namespace Rainkey.Network {
 			// this is key for rails to know what kind of data to even think how to start parsing
 			www.SetRequestHeader("Content-Type", "application/json");
 			www.downloadHandler = new DownloadHandlerBuffer ();
-
-			//test
-//			Dictionary<string, string> headers = www.GetResponseHeaders();
-//			for (int index = 0; index < headers.Count; index++) {
-//				string item = headers [index];
-//				Debug.Log (item);
-//			}
-
-//			Dictionary<string, string> headers = www.GetResponseHeaders();
-//			foreach(var item in headers.Keys)
-//			{
-//				Debug.Log (item);
-//			}
-
-//			foreach(KeyValuePair<string, string> entry in headers)
-//			{
-//				// do something with entry.Value or entry.Key
-//				Debug.Log("key:" + entry.Key + ", " + entry.Value);
-//
-//			}
-
 
 			yield return www.SendWebRequest ();
 
@@ -141,7 +120,7 @@ namespace Rainkey.Network {
 				//List<Foo> foos = JsonConvert.DeserializeObject<List<Foo>>(returnedJsonData);
 
 				// single object deserialize
-				login = JsonConvert.DeserializeObject<Login>(returnedJsonData);
+				login = JsonConvert.DeserializeObject<LoginAuth>(returnedJsonData);
 				Debug.Log("deserialize complete: " + login.auth_token);
 //                Debug.Log("converting json into tru objects >> now testing read from customer 1");
 //                Foo f = foos[0];

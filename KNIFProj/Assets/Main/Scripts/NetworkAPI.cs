@@ -50,8 +50,8 @@ public class NetworkAPI : MonoBehaviour {
 //	}
 
 	// TODO may not need
-	public Login getLogin(){
-		Login login = null;
+	public LoginAuth getLogin(){
+		LoginAuth login = null;
 		if(networker){
 			login = networker.getLogin ();
 		}
