@@ -12,6 +12,7 @@ public class LoginUITester : MonoBehaviour {
 	public Button loginBtn;
 
 	public Button updateWeaponBtn;
+	public Button createNewUserBtn;
 	public Weapon weapon;
 
 
@@ -19,6 +20,8 @@ public class LoginUITester : MonoBehaviour {
 	void Start () {
 		loginBtn.onClick.AddListener (userLogin);
 		updateWeaponBtn.onClick.AddListener (updateWeapon);
+		createNewUserBtn.onClick.AddListener (createNewUser);
+
 	}
 
 	private void log(){
@@ -33,6 +36,10 @@ public class LoginUITester : MonoBehaviour {
 	private void updateWeapon(){
 		log ();
 		gm.saveManager.save (weapon, gm.loginManager.getLoginAuth());
+	}
+
+	private void createNewUser(){
+		gm.loginManager.createUser(new LoginAuth (emailText.text, passText.text, null));
 	}
 
 
