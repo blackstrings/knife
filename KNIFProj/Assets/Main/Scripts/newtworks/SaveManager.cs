@@ -61,6 +61,7 @@ namespace Rainkey.Network {
 			} else {
 				Debug.Log("weapon update success");
 				// Debug.Log (www.downloadHandler.text);
+
 				NetworkResponses rd = JsonUtility.FromJson<NetworkResponses>(www.downloadHandler.text);
 				Debug.Log (rd.success [0]);
 			}
