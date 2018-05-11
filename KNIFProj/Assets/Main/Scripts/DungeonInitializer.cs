@@ -14,7 +14,8 @@ public class DungeonInitializer : MonoBehaviour{
 		}
 
 		// TODO test force start
-		init (1);
+		int dugeonLevel = 1;
+		init (dugeonLevel);
 	}
 
 	/// <summary>
@@ -39,5 +40,9 @@ public class DungeonInitializer : MonoBehaviour{
 		} else{
 			Debug.Log ("failed to init dungeon, basicSpawner is null");
 		}
+	}
+
+	public void attack(){
+		Debug.Log ("Attacking");
 	}
 }
