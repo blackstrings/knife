@@ -27,6 +27,8 @@ namespace Rainkey.Network{
 					return domain + "api/v1/weapons/";
 				case URI.CREATE_NEW_USER:
 					return domain + "api/v1/sign_up/";
+				case URI.CREATE_RANDOM_WEAPON:
+					return domain + "api/v1/weapons_generator/";
 				default:
 					return null;
 			}

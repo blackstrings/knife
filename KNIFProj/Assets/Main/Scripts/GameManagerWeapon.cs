@@ -29,4 +29,16 @@ public class GameManagerWeapon : MonoBehaviour {
 		}
 	}
 
+	/// <summary>
+	/// Dungeons the complete. get new weapons for the user.
+	/// </summary>
+	public void dungeonComplete(DungeonData dungeonData){
+		LoginAuth loginAuth = loginManager.getLoginAuth ();
+		if (loginAuth != null){
+			saveManager.getRandomWeapon (dungeonData, loginAuth);
+		} else{
+			Debug.Log ("fail to get new weapons for user, loginAuth is null");
+		}
+	}
+
 }

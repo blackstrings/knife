@@ -7,6 +7,7 @@ namespace Rainkey.Network{
 	public enum URI{
 		LOGIN,
 		WEAPON,
+		CREATE_RANDOM_WEAPON,
 		CREATE_NEW_USER
 	}
 
