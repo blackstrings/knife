@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using Rainkey.Network;
 
-public class LoginUITester : MonoBehaviour {
+/// <summary>
+/// A test interface for calling all the server apis
+/// </summary>
+public class LoginUITester : MonoBehaviour{
 
-	public GameManagerWeapon gm;
+	private MainGameController gameController;
 	public Text emailText;
 	public Text passText;
 	public Button loginBtn;
@@ -19,37 +22,55 @@ public class LoginUITester : MonoBehaviour {
 
 
 	// Use this for initialization
-	void Start () {
-		loginBtn.onClick.AddListener (userLogin);
-		updateWeaponBtn.onClick.AddListener (updateWeapon);
-		createNewUserBtn.onClick.AddListener (createNewUser);
-		getRandomWeaponBtn.onClick.AddListener (getRandomWeapon);
+	void Start (){
+		
+
+		gameController = GameObject.FindGameObjectWithTag ("GameController").GetComponent<MainGameController> ();
+		if (gameController == null){
+			throw new UnityException ("couldn't find main game controller");
+		}
+
+		// setup the button events
+		if (loginBtn != null 
+			&& createNewUserBtn != null 
+			&& updateWeaponBtn != null
+			&& getRandomWeaponBtn != null){
+
+			loginBtn.onClick.AddListener (userLogin);
+			updateWeaponBtn.onClick.AddListener (updateWeapon);
+			createNewUserBtn.onClick.AddListener (createNewUser);
+			getRandomWeaponBtn.onClick.AddListener (getRandomWeapon);
+		} else {
+			Debug.LogWarning ("UI buttons are null");
+		}
+
 
 	}
 
-	private void log(){
+	private void log (){
 		Debug.Log ("<<LoginUITester>>");
 	}
 
-	private void userLogin(){
+	private void userLogin (){
 		log ();
-		gm.loginManager.login (new LoginAuth (emailText.text, passText.text, null));
+		gameController.login (emailText.text, passText.text, null);
 	}
 
-	private void updateWeapon(){
+	private void updateWeapon (){
 		log ();
-		gm.saveManager.save (weapon, gm.loginManager.getLoginAuth());
+		//gameController.saveManager.save (weapon, gameController.loginManager.getLoginAuth());
+		gameController.saveWeapon (weapon);
 	}
 
-	private void createNewUser(){
-		gm.loginManager.createUser(new LoginAuth (emailText.text, passText.text, null));
+	private void createNewUser (){
+		//gameController.loginManager.createUser(new LoginAuth (emailText.text, passText.text, null));
 	}
 
 	/// <summary>
 	///  when the user completes a dungeon, they get a new weapon as rewared
 	/// </summary>
-	private void getRandomWeapon(){
-		gm.saveManager.getRandomWeapon (dungeonData, gm.loginManager.getLoginAuth ());
+	private void getRandomWeapon (){
+		//gameController.saveManager.getRandomWeapon (dungeonData, gameController.loginManager.getLoginAuth ());
 	}
 
 

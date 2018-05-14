@@ -7,7 +7,8 @@ using Newtonsoft.Json;
 namespace Rainkey.Network {
 
 	/// <summary>
-	/// Handles logging and carries the loginAuth.
+	/// Handles creating new user account and logging in.
+	/// Also carries the loginAuth for later getting.
 	/// 
 	/// Any calls that wish to communicate to the network should request the loginAuth.
 	/// </summary>
@@ -19,21 +20,19 @@ namespace Rainkey.Network {
 		private string loginUri;
 		private string createUserUri;
 
-		// Use this for initialization
-		void Start (){
-			//domain = "http://weapons-game.herokuapp.com/";
-//			string domain = "http://localhost:3000/";
-//			string loginService = "api/v1/login/";
-//			loginURI = domain + loginService;
-		}
-
+		/// <summary>
+		/// Inits all the URIs for this class.
+		/// 
+		/// GameManager calls this.
+		/// </summary>
+		/// <param name="env">Env.</param>
 		public void init(Environments env){
 			loginUri = env.getUri (URI.LOGIN);
 			createUserUri = env.getUri (URI.CREATE_NEW_USER);
 		}
 
 		/// <summary>
-		/// Main login api.
+		/// login
 		/// </summary>
 		/// <param name="loginAuth">Login auth.</param>
 		public void login (LoginAuth loginAuth){
@@ -48,6 +47,11 @@ namespace Rainkey.Network {
 			StartCoroutine (beginNewUserCreation (loginAuth));
 		}
 
+		/// <summary>
+		/// create new user using Post
+		/// </summary>
+		/// <returns>The new user creation.</returns>
+		/// <param name="loginAuth">Login auth.</param>
 		private IEnumerator beginNewUserCreation (LoginAuth loginAuth){
 
 			// WWWForm worked with creating new user, on rails side the escaped charc will be removed so that rails will work
@@ -64,11 +68,11 @@ namespace Rainkey.Network {
 			UnityWebRequest www = UnityWebRequest.Post (createUserUri, form);
 			www.downloadHandler = new DownloadHandlerBuffer ();
 
-			// no need for to set these as these will only cause rails to fail to parse the string when using post
+			// no need for to set header content type
+			// as these will only cause rails to fail to parse the string when using post calls
 			// or use the default content type by not setting it at all
 			// www.SetRequestHeader("Content-Type", "application/json");
 			//www.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
 
 			yield return www.SendWebRequest ();
 
@@ -79,6 +83,8 @@ namespace Rainkey.Network {
 				string returnedJsonData = www.downloadHandler.text;
 
 				// to handle the json deserialize into an object
+				// TODO not sure how we want to handle return data yet from rails
+				/// whether to use jsonUtility or a true jsonObject
 				NetworkResponses rd = JsonUtility.FromJson<NetworkResponses>(returnedJsonData);
 
 
@@ -110,12 +116,18 @@ namespace Rainkey.Network {
 
 
 		private IEnumerator beginLogin (LoginAuth loginAuth){
+			Debug.Log ("logging in test");
 
 			// fill the form
 			WWWForm form = new WWWForm ();
 			form.AddField ("email", loginAuth.email);
 			form.AddField ("password", loginAuth.pass);
 
+
+			if (loginUri == null || loginUri == ""){
+				Debug.LogWarning ("log error empty uri");
+			}
+				
 			// prepare the request
 			UnityWebRequest www = UnityWebRequest.Post (loginUri, form);
 			www.downloadHandler = new DownloadHandlerBuffer ();

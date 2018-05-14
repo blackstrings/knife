@@ -4,24 +4,41 @@ using UnityEngine;
 using UnityEngine.UI;
 using Rainkey.Network;
 
+/// <summary>
+/// The real login UI
+/// </summary>
 public class LoginUI : MonoBehaviour {
 
 	public Text emailText;
 	public Text passText;
 	public Button loginBtn;
-	public GameManagerWeapon gm;
+	public Button createNewUserBtn;
+
+	// set at runtime
+	private MainGameController controller;
 
 	// Use this for initialization
 	void Start () {
-		loginBtn.onClick.AddListener (userLogin);
+		controller = GameObject.FindGameObjectWithTag ("GameController").GetComponent<MainGameController>();
+		if (controller == null){
+			throw new UnityException ("couldn't find main game controller");
+		} else{
+
+			// setup the button events
+			if (loginBtn != null && createNewUserBtn != null){
+				loginBtn.onClick.AddListener (userLogin);
+				createNewUserBtn.onClick.AddListener (createNewUser);
+			}
+		}
 	}
 
+	// the button click calls these
 	private void userLogin(){
-		gm.loginManager.login (new LoginAuth (emailText.text, passText.text, null));
+		controller.login (emailText.text, passText.text, null);
 	}
 
-	// Update is called once per frame
-	void Update () {
+	private void createNewUser(){
 		
 	}
+
 }

@@ -8,10 +8,10 @@ namespace Rainkey.Network{
 
 		private string domain;
 
-		public Environments(string env){
-			if (env == "prod"){
+		public Environments(EnvironmentType envType){
+			if (envType == EnvironmentType.PROD){
 				domain = prodDomain;
-			} else{
+			} else if(envType == EnvironmentType.STAGE){
 				domain = stageDomain;
 			}
 		}
