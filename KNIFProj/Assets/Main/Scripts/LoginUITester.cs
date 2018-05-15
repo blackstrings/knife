@@ -63,14 +63,14 @@ public class LoginUITester : MonoBehaviour{
 	}
 
 	private void createNewUser (){
-		//gameController.loginManager.createUser(new LoginAuth (emailText.text, passText.text, null));
+		gameController.createNewUser(emailText.text, passText.text, null);
 	}
 
 	/// <summary>
 	///  when the user completes a dungeon, they get a new weapon as rewared
 	/// </summary>
 	private void getRandomWeapon (){
-		//gameController.saveManager.getRandomWeapon (dungeonData, gameController.loginManager.getLoginAuth ());
+		gameController.getRandomWeapon (dungeonData);
 	}
 
 

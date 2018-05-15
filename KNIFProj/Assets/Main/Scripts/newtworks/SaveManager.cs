@@ -87,6 +87,7 @@ namespace Rainkey.Network {
 
 		public void getRandomWeapon(DungeonData dungeonData, LoginAuth loginAuth){
 			if (loginAuth != null){
+				Debug.Log ("begin get weapon");
 				StartCoroutine (beginGetRandomWeapon (dungeonData, loginAuth));
 			} else{
 				Debug.Log ("fail to get random weapon, loginAuth is null");
@@ -101,8 +102,10 @@ namespace Rainkey.Network {
 			form.AddField ("dungeon_level", dungeonData.dungeon_level);
 			form.AddField ("experience_points", dungeonData.experience_points);
 
-			if(createRandomWeaponUri == null || createRandomWeaponUri == ""){
-				Debug.LogError("createRandomWeaponUri is empty or null");
+			if (createRandomWeaponUri == null || createRandomWeaponUri == ""){
+				Debug.LogError ("createRandomWeaponUri is empty or null");
+			} else{
+				Debug.Log ("creating new weapon from server");
 			}
 
 			UnityWebRequest www = UnityWebRequest.Post(createRandomWeaponUri, form);

@@ -55,6 +55,7 @@ public class MainGameController : MonoBehaviour {
 	/// </summary>
 	/// <param name="dungeonData">Dungeon data.</param>
 	public void getRandomWeapon(DungeonData dungeonData){
+		Debug.Log ("controller getting weapon");
 		gameManager.saveManager.getRandomWeapon(dungeonData, getLoginAuth());
 	}
 

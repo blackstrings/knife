@@ -95,7 +95,8 @@ namespace Rainkey.Network {
 				// this.loginAuth = loginAuth;
 				// this.loginAuth.auth_token = tempAuth.auth_token;
 				Debug.Log ("creation success");
-				Debug.Log (rd.email[0]);
+				Debug.Log (returnedJsonData);
+				//Debug.Log (rd.email[0]);
 			}
 		}
 
